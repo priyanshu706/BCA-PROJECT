@@ -488,6 +488,7 @@
 @media (max-width: 760px) {
   .footer-grid {
     grid-template-columns: 1fr 1fr;
+    padding-bottom: 28px;
     gap: 22px;
   }
   .footer-brand-col {
@@ -503,5 +504,6 @@
   }
   .footer-grid {
     grid-template-columns: 1fr;
+    padding-bottom: 25px;
   }
 }
