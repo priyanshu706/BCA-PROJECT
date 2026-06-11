@@ -27,7 +27,7 @@
 
       <% if (isOwner) { %>
         <div class="post-owner-actions">
-          <a href="/blogs/<%= blog._id %>/edit" class="btn btn-ghost"><i class="fa-solid fa-pen"></i> Edit</a>
+          <a href="/blogs/<%= blog._id %>/edit" class="btn-ghost btn"><i class="fa-solid fa-pen"></i> Edit</a>
           <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST" class="inline-form"
                 onsubmit="return confirm('Delete this blog permanently?');">
             <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete</button>

@@ -88,7 +88,7 @@ a:hover { text-decoration: underline; }
 .btn-lg { padding: 14px 26px; font-size: 1rem; }
 .btn-block { width: 100%; }
 
-.btn-ghost { background: transparent; color: var(--accent-dark); box-shadow: inset 0 0 0 1px var(--accent); }
+.btn-ghost { background: transparent; color: var(--accent-dark) !important; box-shadow: inset 0 0 0 1px var(--accent); }
 .btn-ghost:hover { background: var(--accent-soft); transform: none; box-shadow: inset 0 0 0 1px var(--accent); }
 
 .btn-danger { background: var(--danger); }
