@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+
+<section class="page-head">
+  <h2 class="page-title">Category: <%= category.name %></h2>
+</section>
+
+<% if (!blogs.length) { %>
+  <div class="empty-state"><div class="empty-icon"><i class="fa-solid fa-folder-open"></i></div><h3>No blogs in this category yet</h3></div>
+<% } else { %>
+  <div class="blog-grid">
+    <% blogs.forEach(function(blog){ %>
+      <article class="blog-card">
+        <a href="/blog/<%= blog.slug %>" class="card-image <%= blog.coverImage ? '' : 'card-image--placeholder' %>"
+           <% if (blog.coverImage) { %>style="background-image:url('<%= blog.coverImage %>')"<% } %>><% if (!blog.coverImage) { %><i class="fa-regular fa-image"></i><% } %></a>
+        <div class="card-body">
+          <h3 class="card-title"><a href="/blog/<%= blog.slug %>"><%= blog.title %></a></h3>
+          <p class="card-excerpt"><%= blog.excerpt %></p>
+          <hr>
+          <p class="card-meta">By <%= blog.author ? blog.author.name : 'Unknown' %></p>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('../partials/footer') %>

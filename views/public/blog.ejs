@@ -1,0 +1,45 @@
+<%- include('../partials/header') %>
+
+<div class="layout-grid">
+  <div class="layout-main">
+    <article class="post">
+      <header class="post-header">
+        <% if (blog.category) { %><a href="/category/<%= blog.category.slug %>" class="tag"><%= blog.category.name %></a><% } %>
+        <h1 class="post-title"><%= blog.title %></h1>
+        <p class="post-meta">
+          By <strong><%= blog.author ? blog.author.name : 'Unknown' %></strong> ·
+          <%= new Date(blog.createdAt).toLocaleDateString('en-IN', {day:'numeric',month:'long',year:'numeric'}) %> ·
+          <%= blog.views %> views
+          <% if (blog.source === 'ai') { %> · <span class="ai-badge">AI-generated</span><% } %>
+          <% if (blog.status !== 'published') { %> · <span class="status status-<%= blog.status %>"><%= blog.status %></span><% } %>
+        </p>
+        <% if (blog.keywords && blog.keywords.length) { %>
+          <div class="tags"><% blog.keywords.forEach(function(k){ %><span class="tag tag-soft"><%= k %></span><% }) %></div>
+        <% } %>
+      </header>
+
+      <% if (blog.coverImage) { %>
+        <img src="<%= blog.coverImage %>" alt="<%= blog.title %>" class="post-image" />
+      <% } %>
+
+      <%# Content is sanitised on save, so it is safe to output as HTML %>
+      <div class="post-body"><%- blog.content %></div>
+
+      <% if (isOwner) { %>
+        <div class="post-owner-actions">
+          <a href="/blogs/<%= blog._id %>/edit" class="btn btn-ghost"><i class="fa-solid fa-pen"></i> Edit</a>
+          <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST" class="inline-form"
+                onsubmit="return confirm('Delete this blog permanently?');">
+            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete</button>
+          </form>
+        </div>
+      <% } %>
+
+      <p class="back-link"><a href="/"><i class="fa-solid fa-arrow-left"></i> Back to all articles</a></p>
+    </article>
+  </div>
+
+  <%- include('../partials/sidebar') %>
+</div>
+
+<%- include('../partials/footer') %>

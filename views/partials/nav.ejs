@@ -1,0 +1,59 @@
+<% var onAdmin = (typeof activeNav !== 'undefined'); %>
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><i class="fa-solid fa-feather-pointed brand-mark"></i> Priyanshu's&nbsp;<span class="brand-accent">Blog</span></a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="nav-collapse" id="navCollapse">
+      <div class="nav-search" role="search">
+        <i class="fa-solid fa-magnifying-glass nav-search-icon"></i>
+        <input type="text" id="liveSearch" autocomplete="off" placeholder="Search articles…" aria-label="Search articles" />
+        <div class="search-results" id="searchResults" hidden></div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="/" class="nav-item">Home</a>
+        <a href="/about" class="nav-item">About</a>
+        <a href="/documentation" class="nav-item">Docs</a>
+
+        <% if (currentUser) { %>
+          <% if (!onAdmin) { %>
+            <a href="/dashboard" class="nav-item">Dashboard</a>
+            <% if (currentUser.role === 'admin') { %><a href="/admin" class="nav-item">Admin</a><% } %>
+          <% } %>
+
+          <div class="nav-create nav-dd">
+            <button type="button" class="btn btn-sm nav-dd-btn"><i class="fa-solid fa-plus"></i> Contribute <i class="fa-solid fa-chevron-down chev"></i></button>
+            <div class="nav-menu">
+              <a href="/blogs/generate"><i class="fa-solid fa-wand-magic-sparkles nm-icon"></i> Generate with AI</a>
+              <a href="/blogs/write"><i class="fa-solid fa-pen-nib nm-icon"></i> Write Manually</a>
+            </div>
+          </div>
+
+          <div class="nav-account nav-dd">
+            <span class="nav-avatar"><%= currentUser.name.charAt(0).toUpperCase() %></span>
+            <div class="nav-menu nav-menu-right">
+              <span class="nav-menu-name"><%= currentUser.name %></span>
+              <a href="/dashboard"><i class="fa-solid fa-folder-open nm-icon"></i> My Blogs</a>
+              <% if (currentUser.role === 'admin' && !onAdmin) { %><a href="/admin"><i class="fa-solid fa-gauge-high nm-icon"></i> Admin Panel</a><% } %>
+              <button type="button" class="nav-menu-logout theme-toggle" style="color:var(--text);">
+                <i class="fa-solid fa-moon nm-icon"></i><i class="fa-solid fa-sun nm-icon"></i> <span class="theme-label">Switch theme</span>
+              </button>
+              <form action="/logout?_method=POST" method="POST"><button type="submit" class="nav-menu-logout"><i class="fa-solid fa-right-from-bracket nm-icon"></i> Logout</button></form>
+            </div>
+          </div>
+        <% } else { %>
+          <a href="/login" class="btn btn-sm nav-contribute"><i class="fa-solid fa-pen-to-square"></i> Contribute</a>
+          <div class="theme-toggle-wrap">
+            <button type="button" class="theme-toggle icon-btn" aria-label="Toggle dark mode" title="Toggle dark / light">
+              <i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i>
+            </button>
+          </div>
+        <% } %>
+      </nav>
+    </div>
+  </div>
+</header>

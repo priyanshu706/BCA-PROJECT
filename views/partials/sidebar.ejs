@@ -1,0 +1,37 @@
+<aside class="sidebar">
+  <div class="widget">
+    <h3 class="widget-title">Search</h3>
+    <form action="/search" method="GET" class="widget-search">
+      <input type="text" name="q" placeholder="Search articles…" aria-label="Search" />
+      <button type="submit" class="btn btn-sm" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </form>
+  </div>
+
+  <% if (typeof sidebarCategories !== 'undefined' && sidebarCategories && sidebarCategories.length) { %>
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <ul class="widget-list">
+      <% sidebarCategories.forEach(function(c){ %>
+        <li><a href="/category/<%= c.slug %>"><i class="fa-solid fa-folder nm-icon"></i> <%= c.name %></a></li>
+      <% }) %>
+    </ul>
+  </div>
+  <% } %>
+
+  <% if (typeof sidebarRecent !== 'undefined' && sidebarRecent && sidebarRecent.length) { %>
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <ul class="widget-list widget-recent">
+      <% sidebarRecent.forEach(function(b){ %>
+        <li><a href="/blog/<%= b.slug %>"><%= b.title %></a></li>
+      <% }) %>
+    </ul>
+  </div>
+  <% } %>
+
+  <div class="widget widget-about">
+    <h3 class="widget-title">About</h3>
+    <p class="muted">Hi, I'm <strong>Priyanshu Anand</strong>. I built this AI-powered blog platform as my BCA final-semester project.</p>
+    <a href="/about" class="btn btn-sm btn-ghost">Learn more</a>
+  </div>
+</aside>

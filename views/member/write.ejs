@@ -1,0 +1,65 @@
+<%- include('../partials/header') %>
+
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
+
+<section class="generate-wrap generate-wide">
+  <h1 class="page-title">Write a Blog</h1>
+  <p class="muted">Use the full formatting toolbar below. Your content is sanitised on save so it renders safely.</p>
+
+  <form action="/blogs/write" method="POST" class="form" id="writeForm">
+    <label class="field"><span>Title <em>*</em></span>
+      <input type="text" name="title" required placeholder="Your blog title" /></label>
+
+    <label class="field"><span>Content <em>*</em></span></label>
+    <!-- Quill rich-text editor -->
+    <div id="editor" class="editor-area"></div>
+    <!-- Hidden field that receives the editor HTML on submit -->
+    <input type="hidden" name="content" id="content" />
+
+    <div class="field-row">
+      <label class="field"><span>Category</span>
+        <select name="categoryId">
+          <option value="">— None —</option>
+          <% categories.forEach(function(c){ %><option value="<%= c._id %>"><%= c.name %></option><% }) %>
+        </select></label>
+      <label class="field"><span>Status</span>
+        <select name="status">
+          <option value="published" selected>Published</option>
+          <option value="draft">Draft</option>
+        </select></label>
+    </div>
+
+    <label class="field"><span>Meta Description (SEO)</span>
+      <input type="text" name="metaDescription" maxlength="160" placeholder="Up to 160 characters" /></label>
+    <label class="field"><span>Keywords (comma separated)</span>
+      <input type="text" name="keywords" placeholder="e.g. marketing, growth, branding" /></label>
+
+    <button type="submit" class="btn btn-block">Save Blog</button>
+  </form>
+</section>
+
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<script>
+  // Initialise Quill with a full formatting toolbar.
+  const quill = new Quill('#editor', {
+    theme: 'snow',
+    placeholder: 'Write your article here…',
+    modules: {
+      toolbar: [
+        [{ header: [2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote', 'code-block'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{ align: [] }],
+        ['link', 'image'],
+        ['clean'],
+      ],
+    },
+  });
+  // Copy the editor HTML into the hidden field before submitting.
+  document.getElementById('writeForm').addEventListener('submit', function () {
+    document.getElementById('content').value = quill.root.innerHTML;
+  });
+</script>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,61 @@
+<%- include('../partials/header') %>
+
+<article class="content-page docs-page">
+  <h1 class="page-title">Project Documentation</h1>
+  <p class="lead">This is the documentation for <strong>Priyanshu's Blog</strong>, written by me — <strong>Priyanshu Anand</strong>. I'm building this platform as my BCA final-semester project (BCSP-064), and this page explains what I made, why, and how it works.</p>
+
+  <div class="doc-meta">
+    <div><span class="doc-meta-label">Project</span>Priyanshu's Blog — AI-Powered Blog Platform</div>
+    <div><span class="doc-meta-label">Built by</span>Priyanshu Anand</div>
+    <div><span class="doc-meta-label">Programme</span>Bachelor of Computer Applications (BCA)</div>
+    <div><span class="doc-meta-label">Course Code</span>BCSP-064</div>
+  </div>
+
+  <h2 class="section-title">1. What I'm building</h2>
+  <p>I'm building a complete, multi-user blogging website. Visitors can read and search published articles. Registered members can contribute their own posts — either by generating them with Artificial Intelligence or by writing them by hand in a rich-text editor. And as the administrator, I can manage the entire platform from a dedicated panel. Every article is automatically optimised for search engines, and I sanitise all content before it is published so the site renders safely.</p>
+
+  <h2 class="section-title">2. My objectives</h2>
+  <ul class="content-list">
+    <li>Build a public blog website with browsing, live search and clean reading pages.</li>
+    <li>Let members create blogs using AI (including long 2000+ word articles) or a manual editor.</li>
+    <li>Automatically generate SEO data for every article I publish.</li>
+    <li>Sanitise all content so it always renders safely.</li>
+    <li>Give myself, as admin, full role-based control over users and content.</li>
+  </ul>
+
+  <h2 class="section-title">3. The technology I used</h2>
+  <ul class="content-list">
+    <li><strong>Backend:</strong> Node.js with the Express.js framework.</li>
+    <li><strong>Views:</strong> EJS server-side templating.</li>
+    <li><strong>Database:</strong> MongoDB with the Mongoose ODM.</li>
+    <li><strong>AI:</strong> the Groq API (llama-3.3-70b-versatile) for content generation.</li>
+    <li><strong>Editor:</strong> a Quill rich-text editor for manual writing.</li>
+    <li><strong>Security:</strong> bcrypt password hashing, sessions stored in MongoDB, and HTML sanitisation.</li>
+    <li><strong>Images:</strong> free image APIs with the Sharp library for optimisation.</li>
+    <li><strong>Interface:</strong> a custom responsive UI with Font Awesome icons, glassmorphism and smooth animations.</li>
+  </ul>
+
+  <h2 class="section-title">4. The features I implemented</h2>
+  <ul class="content-list">
+    <li><strong>Public site:</strong> a home feed, category pages, live "as-you-type" search and individual blog pages.</li>
+    <li><strong>AI generation:</strong> I turn a topic into a full SEO-ready article, with short to extra-long (2000+ word) options.</li>
+    <li><strong>Manual editor:</strong> headings, bold/italic/underline, lists, quotes, links, images and code blocks.</li>
+    <li><strong>Content status:</strong> every blog can be Published, kept as a Draft, or moved to Trash and restored — controlled by user role.</li>
+    <li><strong>SEO:</strong> a per-blog slug, meta description, keywords, Open Graph tags and a site sitemap.</li>
+    <li><strong>Admin panel:</strong> statistics, user management (ban / delete / create more admins), content moderation and editable API keys.</li>
+  </ul>
+
+  <h2 class="section-title">5. How the roles work</h2>
+  <ul class="content-list">
+    <li><strong>Visitor:</strong> can browse, search and read published articles.</li>
+    <li><strong>Member:</strong> can create and manage their own blogs (publish, draft or trash).</li>
+    <li><strong>Administrator (me):</strong> has full control over users, content, statistics and system settings.</li>
+  </ul>
+
+  <h2 class="section-title">6. How it works behind the scenes</h2>
+  <p>When a member submits a topic, I authenticate the request, call the Groq API to generate the article, attach SEO data and an optimised image, sanitise the content, and save the finished post to MongoDB before publishing it to the public feed. Manually written posts follow the same path after I sanitise their HTML. I oversee everything from the admin panel, which is protected by role-based access control so only administrators can reach it.</p>
+
+  <p class="cta-line"><a href="/about">Read more about why I built this <i class="fa-solid fa-arrow-right"></i></a></p>
+</article>
+
+<%- include('../partials/footer') %>

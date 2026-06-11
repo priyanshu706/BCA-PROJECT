@@ -1,0 +1,150 @@
+/* Design tokens, reset, typography and the button system. */
+
+:root {
+  --bg: #f6f6f3;
+  --surface: #ffffff;
+  --surface-2: #f1f1ec;
+  --text: #1b211f;
+  --text-soft: #5a655f;
+  --border: #e4e2da;
+
+  --accent: #0f766e;
+  --accent-dark: #0b524c;
+  --accent-soft: #e3f1ee;
+  --danger: #b3261e;
+  --amber: #b9770e;
+
+  --shadow: 0 1px 3px rgba(17, 24, 39, 0.06), 0 1px 2px rgba(17, 24, 39, 0.04);
+  --shadow-lg: 0 8px 24px rgba(17, 24, 39, 0.10);
+  --radius: 14px;
+
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.45);
+
+  --fd: "Inter", system-ui, -apple-system, sans-serif;
+  --fb: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--fb);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+main.container { flex: 1; padding: 32px 24px 64px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.muted { color: var(--text-soft); }
+
+/* Scroll-reveal animation */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal.revealed { opacity: 1; transform: none; }
+@keyframes floatIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* On touch devices, do not show the pointer cursor. */
+@media (hover: none) and (pointer: coarse) {
+  *, *::before, *::after { cursor: default !important; }
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--accent);
+  color: #fff;
+  padding: 11px 20px;
+  border-radius: 10px;
+  border: none;
+  font-family: var(--fb);
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: var(--shadow);
+  transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+}
+.btn:hover { background: var(--accent-dark); text-decoration: none; transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+.btn:active { transform: translateY(0); }
+.btn i { font-size: 0.9em; }
+
+.btn-sm { padding: 8px 14px; font-size: 0.85rem; }
+.btn-lg { padding: 14px 26px; font-size: 1rem; }
+.btn-block { width: 100%; }
+
+.btn-ghost { background: transparent; color: var(--accent-dark); box-shadow: inset 0 0 0 1px var(--accent); }
+.btn-ghost:hover { background: var(--accent-soft); transform: none; box-shadow: inset 0 0 0 1px var(--accent); }
+
+.btn-danger { background: var(--danger); }
+.btn-danger:hover { background: #8e1d17; }
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-soft);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+.icon-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+.link-btn { background: none; border: none; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; padding: 0; }
+.link-btn:hover { text-decoration: underline; }
+.link-danger { color: var(--danger); }
+.inline-form { display: inline; }
+.head-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.chev { font-size: 0.7em; transition: transform 0.2s; }
+
+/* Glass effect for header and overlay menus */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid var(--glass-border);
+}
+
+/* Custom select arrow (native arrow sits too close to the edge) */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235a655f' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+
+/* Replace the browser autofill background with the site surface colour */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: var(--text);
+  -webkit-box-shadow: 0 0 0 1000px var(--surface) inset;
+  box-shadow: 0 0 0 1000px var(--surface) inset;
+  caret-color: var(--text);
+  transition: background-color 9999s ease-in-out 0s;
+}

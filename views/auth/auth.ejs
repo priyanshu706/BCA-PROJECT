@@ -1,0 +1,54 @@
+<%- include('../partials/header') %>
+
+<section class="auth-wrap">
+  <div class="auth-card glass" data-mode="<%= mode %>">
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab" data-target="login">Login</button>
+      <button type="button" class="auth-tab" data-target="register">Create Account</button>
+    </div>
+
+    <!-- LOGIN -->
+    <form action="/login" method="POST" class="form auth-form" data-form="login">
+      <h1 class="auth-title">Welcome back</h1>
+      <p class="auth-sub">Log in to write and manage your blogs.</p>
+      <label class="field"><span>Email</span>
+        <input type="email" name="email" required placeholder="you@example.com" /></label>
+      <label class="field">
+        <span class="field-label-row">Password <a href="#" class="switch-to forgot-link" data-target="forgot">Forgot password?</a></span>
+        <span class="pw-wrap"><input type="password" name="password" required placeholder="Your password" /><button type="button" class="pw-toggle" aria-label="Show password" tabindex="-1"><i class="fa-regular fa-eye"></i></button></span></label>
+      <% if (turnstileSiteKey) { %><div class="cf-turnstile" data-sitekey="<%= turnstileSiteKey %>"></div><% } %>
+      <button type="submit" class="btn btn-block"><i class="fa-solid fa-right-to-bracket"></i> Log In</button>
+      <p class="auth-alt">New here? <a href="#" class="switch-to" data-target="register">Create an account</a></p>
+    </form>
+
+    <!-- REGISTER -->
+    <form action="/register" method="POST" class="form auth-form" data-form="register">
+      <h1 class="auth-title">Join &amp; contribute</h1>
+      <p class="auth-sub">Create a free account to start publishing.</p>
+      <label class="field"><span>Full Name</span>
+        <input type="text" name="name" required placeholder="e.g. Priyanshu Anand" /></label>
+      <label class="field"><span>Email</span>
+        <input type="email" name="email" required placeholder="you@example.com" /></label>
+      <label class="field"><span>Password</span>
+        <span class="pw-wrap"><input type="password" name="password" required minlength="6" placeholder="At least 6 characters" /><button type="button" class="pw-toggle" aria-label="Show password" tabindex="-1"><i class="fa-regular fa-eye"></i></button></span></label>
+      <label class="field"><span>Confirm Password</span>
+        <span class="pw-wrap"><input type="password" name="confirmPassword" required minlength="6" placeholder="Re-enter password" /><button type="button" class="pw-toggle" aria-label="Show password" tabindex="-1"><i class="fa-regular fa-eye"></i></button></span></label>
+      <% if (turnstileSiteKey) { %><div class="cf-turnstile" data-sitekey="<%= turnstileSiteKey %>"></div><% } %>
+      <button type="submit" class="btn btn-block"><i class="fa-solid fa-user-plus"></i> Create Account</button>
+      <p class="auth-alt">Already have an account? <a href="#" class="switch-to" data-target="login">Log in</a></p>
+    </form>
+
+    <!-- FORGOT PASSWORD -->
+    <form action="/forgot-password" method="POST" class="form auth-form" data-form="forgot">
+      <h1 class="auth-title">Reset your password</h1>
+      <p class="auth-sub">Enter your account email and we'll send you a link to set a new password.</p>
+      <label class="field"><span>Email</span>
+        <input type="email" name="email" required placeholder="you@example.com" /></label>
+      <% if (turnstileSiteKey) { %><div class="cf-turnstile" data-sitekey="<%= turnstileSiteKey %>"></div><% } %>
+      <button type="submit" class="btn btn-block"><i class="fa-solid fa-paper-plane"></i> Send reset link</button>
+      <p class="auth-alt">Remembered it? <a href="#" class="switch-to" data-target="login">Back to login</a></p>
+    </form>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

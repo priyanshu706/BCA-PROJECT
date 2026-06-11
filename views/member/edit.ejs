@@ -1,0 +1,68 @@
+<%- include('../partials/header') %>
+
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
+
+<section class="generate-wrap generate-wide">
+  <h1 class="page-title">Edit Blog</h1>
+  <p class="muted">Refine your content. Changes are sanitised on save.</p>
+
+  <form action="/blogs/<%= blog._id %>?_method=PUT" method="POST" class="form" id="editForm">
+    <label class="field"><span>Title</span>
+      <input type="text" name="title" value="<%= blog.title %>" required /></label>
+
+    <label class="field"><span>Content</span></label>
+    <div id="editor" class="editor-area"></div>
+    <input type="hidden" name="content" id="content" />
+
+    <div class="field-row">
+      <label class="field"><span>Category</span>
+        <select name="categoryId">
+          <option value="">— None —</option>
+          <% categories.forEach(function(c){ %>
+            <option value="<%= c._id %>" <%= (blog.category && blog.category.toString() === c._id.toString()) ? 'selected' : '' %>><%= c.name %></option>
+          <% }) %>
+        </select></label>
+      <label class="field"><span>Status</span>
+        <select name="status">
+          <option value="published" <%= blog.status === 'published' ? 'selected' : '' %>>Published</option>
+          <option value="draft" <%= blog.status === 'draft' ? 'selected' : '' %>>Draft</option>
+          <option value="trash" <%= blog.status === 'trash' ? 'selected' : '' %>>Trash</option>
+        </select></label>
+    </div>
+
+    <label class="field"><span>Meta Description (SEO)</span>
+      <input type="text" name="metaDescription" maxlength="160" value="<%= blog.metaDescription %>" /></label>
+    <label class="field"><span>Keywords (comma separated)</span>
+      <input type="text" name="keywords" value="<%= (blog.keywords || []).join(', ') %>" /></label>
+
+    <div class="field-row">
+      <button type="submit" class="btn">Save Changes</button>
+      <a href="/blog/<%= blog.slug %>" class="btn btn-ghost">Cancel</a>
+    </div>
+  </form>
+</section>
+
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<script>
+  const quill = new Quill('#editor', {
+    theme: 'snow',
+    modules: {
+      toolbar: [
+        [{ header: [2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote', 'code-block'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{ align: [] }],
+        ['link', 'image'],
+        ['clean'],
+      ],
+    },
+  });
+  // Pre-fill the editor with the existing (already-sanitised) content.
+  quill.root.innerHTML = <%- JSON.stringify(blog.content) %>;
+  document.getElementById('editForm').addEventListener('submit', function () {
+    document.getElementById('content').value = quill.root.innerHTML;
+  });
+</script>
+
+<%- include('../partials/footer') %>

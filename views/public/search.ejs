@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+
+<section class="page-head"><h1 class="page-title">Advanced Search</h1></section>
+
+<form action="/search" method="GET" class="search-panel">
+  <div class="search-row">
+    <label class="field"><span>Keyword</span>
+      <input type="text" name="q" value="<%= q %>" placeholder="Title, excerpt or keyword…" /></label>
+  </div>
+  <div class="field-row">
+    <label class="field"><span>Category</span>
+      <select name="category">
+        <option value="">All categories</option>
+        <% categories.forEach(function(c){ %>
+          <option value="<%= c._id %>" <%= (categoryId === c._id.toString()) ? 'selected' : '' %>><%= c.name %></option>
+        <% }) %>
+      </select></label>
+    <label class="field"><span>Source</span>
+      <select name="source">
+        <option value="">Any</option>
+        <option value="ai" <%= source === 'ai' ? 'selected' : '' %>>AI-generated</option>
+        <option value="manual" <%= source === 'manual' ? 'selected' : '' %>>Written manually</option>
+      </select></label>
+    <label class="field"><span>Sort by</span>
+      <select name="sort">
+        <option value="newest" <%= sort === 'newest' ? 'selected' : '' %>>Newest first</option>
+        <option value="oldest" <%= sort === 'oldest' ? 'selected' : '' %>>Oldest first</option>
+        <option value="popular" <%= sort === 'popular' ? 'selected' : '' %>>Most viewed</option>
+      </select></label>
+  </div>
+  <button type="submit" class="btn">Search</button>
+</form>
+
+<% if (hasCriteria) { %>
+  <h2 class="section-title"><%= blogs.length %> result<%= blogs.length === 1 ? '' : 's' %></h2>
+  <% if (!blogs.length) { %>
+    <div class="empty-state"><div class="empty-icon"><i class="fa-solid fa-magnifying-glass"></i></div><h3>No matching blogs found</h3><p>Try different keywords or filters.</p></div>
+  <% } else { %>
+    <div class="blog-grid">
+      <% blogs.forEach(function(blog){ %>
+        <article class="blog-card">
+          <a href="/blog/<%= blog.slug %>" class="card-image <%= blog.coverImage ? '' : 'card-image--placeholder' %>"
+             <% if (blog.coverImage) { %>style="background-image:url('<%= blog.coverImage %>')"<% } %>><% if (!blog.coverImage) { %><i class="fa-regular fa-image"></i><% } %></a>
+          <div class="card-body">
+            <h3 class="card-title"><a href="/blog/<%= blog.slug %>"><%= blog.title %></a></h3>
+            <p class="card-excerpt"><%= blog.excerpt %></p>
+            <p class="card-meta">By <%= blog.author ? blog.author.name : 'Unknown' %> · <%= blog.views %> views
+              <% if (blog.source === 'ai') { %> · <span class="ai-badge">AI</span><% } %></p>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  <% } %>
+<% } else { %>
+  <p class="muted">Enter a keyword or choose filters above to search published articles.</p>
+<% } %>
+
+<%- include('../partials/footer') %>
