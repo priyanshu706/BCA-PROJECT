@@ -2,7 +2,7 @@
 <%- include('admin_sidebar') %>
 
 <section class="page-head"><h1 class="page-title">Manage Users</h1></section>
-
+<div class="table-wrap">
 <table class="data-table">
   <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Blogs</th><th>Status</th><th>Actions</th></tr></thead>
   <tbody>
@@ -37,6 +37,7 @@
     <% }) %>
   </tbody>
 </table>
+</div>
 
 <%- include('admin_end') %>
 <%- include('../partials/footer') %>

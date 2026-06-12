@@ -26,11 +26,12 @@
     <p>Generate one with AI or write your own to get started.</p>
   </div>
 <% } else { %>
-  <table class="data-table">
-    <thead><tr><th>Title</th><th>Category</th><th>Source</th><th>Status</th><th>Views</th><th>Actions</th></tr></thead>
-    <tbody>
-      <% blogs.forEach(function(blog){ %>
-        <tr>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th>Title</th><th>Category</th><th>Source</th><th>Status</th><th>Views</th><th>Actions</th></tr></thead>
+      <tbody>
+        <% blogs.forEach(function(blog){ %>
+          <tr>
           <td><a href="/blog/<%= blog.slug %>"><%= blog.title %></a></td>
           <td><%= blog.category ? blog.category.name : '—' %></td>
           <td><%= blog.source === 'ai' ? 'AI' : 'Manual' %></td>
@@ -69,6 +70,7 @@
       <% }) %>
     </tbody>
   </table>
+  </div>
 <% } %>
 
 <%- include('../partials/footer') %>

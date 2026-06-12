@@ -7,7 +7,6 @@
    - "Generating…" state + flash auto-dismiss
 */
 document.addEventListener("DOMContentLoaded", function () {
-
   // Show / hide password fields
   document.querySelectorAll(".pw-toggle").forEach(function (btn) {
     btn.addEventListener("click", function () {
@@ -16,7 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!input) return;
       var show = input.type === "password";
       input.type = show ? "text" : "password";
-      if (icon) icon.className = show ? "fa-regular fa-eye-slash" : "fa-regular fa-eye";
+      if (icon)
+        icon.className = show ? "fa-regular fa-eye-slash" : "fa-regular fa-eye";
       btn.setAttribute("aria-label", show ? "Hide password" : "Show password");
     });
   });
@@ -24,25 +24,43 @@ document.addEventListener("DOMContentLoaded", function () {
   var themeBtns = document.querySelectorAll(".theme-toggle");
   themeBtns.forEach(function (btn) {
     btn.addEventListener("click", function () {
-      var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      var isDark =
+        document.documentElement.getAttribute("data-theme") === "dark";
       var next = isDark ? "light" : "dark";
-      if (next === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      if (next === "dark")
+        document.documentElement.setAttribute("data-theme", "dark");
       else document.documentElement.removeAttribute("data-theme");
-      try { localStorage.setItem("theme", next); } catch (e) {}
+      try {
+        localStorage.setItem("theme", next);
+      } catch (e) {}
     });
   });
 
   /* ---- Mobile hamburger ---- */
   var toggle = document.getElementById("navToggle");
   var collapse = document.getElementById("navCollapse");
+
   if (toggle && collapse) {
-    toggle.addEventListener("click", function () {
+    toggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+
       var open = collapse.classList.toggle("open");
       toggle.classList.toggle("active", open);
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
     });
-  }
 
+    document.addEventListener("click", function (e) {
+      if (
+        collapse.classList.contains("open") &&
+        !collapse.contains(e.target) &&
+        !toggle.contains(e.target)
+      ) {
+        collapse.classList.remove("open");
+        toggle.classList.remove("active");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
   /* ---- Dropdowns: tap to open on small screens ---- */
   document.querySelectorAll(".nav-dd").forEach(function (dd) {
     var btn = dd.querySelector(".nav-dd-btn, .nav-avatar");
