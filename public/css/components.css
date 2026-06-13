@@ -210,6 +210,7 @@
   padding: 3px 10px;
   border-radius: 999px;
   display: inline-block;
+  white-space: nowrap;
 }
 .tag-soft {
   background: var(--surface-2);
