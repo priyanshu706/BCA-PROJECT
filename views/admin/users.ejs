@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+<%- include('admin_sidebar') %>
+
+<section class="page-head"><h1 class="page-title">Manage Users</h1></section>
+<div class="table-wrap">
+<table class="data-table">
+  <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Blogs</th><th>Status</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% users.forEach(function(u){ %>
+      <tr>
+        <td><%= u.name %></td>
+        <td><%= u.email %></td>
+        <td>
+          <% if (u.isSuperAdmin) { %><span class="status status-published">super admin</span>
+          <% } else { %><span class="status <%= u.role === 'admin' ? 'status-published' : '' %>"><%= u.role %></span><% } %>
+        </td>
+        <td><%= u.blogCount %></td>
+        <td><% if (u.isBanned) { %><span class="status status-banned">banned</span><% } else { %><span class="status status-published">active</span><% } %></td>
+        <td class="row-actions">
+          <% if (u._id.toString() === currentUser._id.toString()) { %>
+            <span class="muted">(you)</span>
+          <% } else if (u.isSuperAdmin) { %>
+            <span class="muted"><i class="fa-solid fa-lock"></i> protected</span>
+          <% } else if (u.role === 'admin' && !currentUser.isSuperAdmin) { %>
+            <span class="muted">admin</span>
+          <% } else { %>
+            <form action="/admin/users/<%= u._id %>/ban" method="POST" class="inline-form">
+              <button type="submit" class="link-btn"><%= u.isBanned ? 'Un-ban' : 'Ban' %></button>
+            </form>
+            <form action="/admin/users/<%= u._id %>?_method=DELETE" method="POST" class="inline-form"
+                  onsubmit="return confirm('Delete this user and all their blogs?');">
+              <button type="submit" class="link-btn link-danger">Delete</button>
+            </form>
+          <% } %>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+</div>
+
+<%- include('admin_end') %>
+<%- include('../partials/footer') %>

@@ -1,0 +1,82 @@
+/* Dark theme (toggled via [data-theme="dark"] on <html>). */
+
+.theme-toggle .fa-sun {
+  display: none;
+}
+[data-theme="dark"] .theme-toggle .fa-moon {
+  display: none;
+}
+[data-theme="dark"] .theme-toggle .fa-sun {
+  display: inline;
+}
+
+[data-theme="dark"] {
+  --bg: #111715;
+  --surface: #1a221e;
+  --surface-2: #232d28;
+  --text: #e7efea;
+  --text-soft: #9fb0a8;
+  --border: #2c3832;
+
+  --accent: #2dd4bf;
+  --accent-dark: #5eead4;
+  --accent-soft: rgba(45, 212, 191, 0.14);
+
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  --glass-bg: rgb(26, 34, 30);
+  --glass-blur: blur(10px);
+  --glass-border: rgba(255, 255, 255, 0.06);
+}
+
+
+[data-theme="dark"] .btn {
+  color: #0c1311;
+}
+
+[data-theme="dark"] .btn:hover {
+  color: #0c1311;
+}
+[data-theme="dark"] .ai-badge,
+[data-theme="dark"] .auth-tab.active,
+[data-theme="dark"] .admin-side-nav a.active,
+[data-theme="dark"] .page-link.active {
+  color: #0c1311;
+}
+[data-theme="dark"] .nav-avatar {
+  color: #0c1311;
+}
+
+[data-theme="dark"] .ql-toolbar .ql-stroke {
+  stroke: var(--text-soft);
+}
+[data-theme="dark"] .ql-toolbar .ql-fill {
+  fill: var(--text-soft);
+}
+[data-theme="dark"] .ql-toolbar .ql-picker {
+  color: var(--text-soft);
+}
+[data-theme="dark"] .ql-editor.ql-blank::before {
+  color: var(--text-soft);
+}
+
+body,
+.site-header,
+.nav-search input,
+.field input,
+.field select,
+.field textarea,
+.blog-card,
+.data-table,
+.panel,
+.stat-card,
+.content-page,
+.post,
+.nav-menu,
+.admin-sidebar {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}

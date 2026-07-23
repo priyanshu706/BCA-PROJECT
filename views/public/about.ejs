@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+
+<article class="content-page">
+  <h1 class="page-title">About This Project</h1>
+  <p class="lead">Hi, I'm <strong>Priyanshu Anand</strong>, and this is a platform I'm building from the ground up as my BCA final-semester project. I wanted to create something real — not just a demo — so I designed it as a complete, working blog website that anyone can actually use.</p>
+
+  <h2 class="section-title">Why I'm building this</h2>
+  <p>I kept noticing the same problem: people want to publish content regularly, but writing, formatting and optimising every article takes more time and skill than most of us have to spare. So I set out to build a platform that removes that friction. My goal was to let a person turn a single idea into a finished, search-ready article in seconds — while still giving them full control to write and edit everything themselves if they prefer.</p>
+
+  <h2 class="section-title">What I built</h2>
+  <p>I designed and developed the whole system myself — the database, the server logic, the user interface and the security. Here is what it does:</p>
+  <ul class="content-list">
+    <li><strong>AI blog generation</strong> — I integrated the Groq API so a member can type a topic and get a complete, structured article back, including long-form posts of 2000+ words.</li>
+    <li><strong>Manual writing</strong> — I added a full rich-text editor for people who want to write and format their own articles by hand.</li>
+    <li><strong>Automatic SEO</strong> — every article I publish on the platform automatically gets a clean URL, a meta description, keywords and social-sharing tags, plus a site-wide sitemap.</li>
+    <li><strong>Safe content</strong> — I sanitise all content before it is saved, so the site stays secure no matter who is writing.</li>
+    <li><strong>An admin panel</strong> — I built a role-based admin area where I can manage users, moderate content, view statistics and update settings.</li>
+  </ul>
+
+  <h2 class="section-title">How I built it</h2>
+  <p>I built the backend with <strong>Node.js</strong> and <strong>Express.js</strong>, used <strong>EJS</strong> to render the pages on the server (which keeps everything fast and SEO-friendly), and stored all the data in <strong>MongoDB</strong>. For the AI, I'm using the Groq API; for images, I pull from free image services and optimise them on the server. I handled authentication myself with hashed passwords and sessions, and added role-based access control so members and administrators see different things.</p>
+
+  <h2 class="section-title">About me</h2>
+  <p>I'm a BCA final-year student, and I built this project (course code <strong>BCSP-064</strong>) to bring together everything I've learned — Artificial Intelligence, full-stack web development and databases — into one practical application I'm genuinely proud of.</p>
+
+  <p class="cta-line">Want to try it? <a href="/login">Create an account and contribute <i class="fa-solid fa-arrow-right"></i></a></p>
+</article>
+
+<%- include('../partials/footer') %>

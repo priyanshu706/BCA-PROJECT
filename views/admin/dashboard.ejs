@@ -1,0 +1,145 @@
+<%- include('../partials/header') %>
+<%- include('admin_sidebar') %>
+
+<section class="page-head"><h1 class="page-title">Dashboard</h1></section>
+
+ <div class="kpi-strip">
+      <div class="kpi">
+        <span class="kpi-num">
+          <%= stats.userCount %>
+        </span>
+        <div class="kpi-meta">
+          <span class="kpi-ic"><i class="fa-solid fa-users"></i></span>
+          <span class="kpi-label">Total Users</span>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <span class="kpi-num">
+          <%= stats.adminCount %>
+        </span>
+        <div class="kpi-meta">
+          <span class="kpi-ic"><i class="fa-solid fa-user-shield"></i></span>
+          <span class="kpi-label">Admins</span>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <span class="kpi-num">
+          <%= stats.blogCount %>
+        </span>
+        <div class="kpi-meta">
+          <span class="kpi-ic"><i class="fa-solid fa-newspaper"></i></span>
+          <span class="kpi-label">Total Blogs</span>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <span class="kpi-num">
+          <%= stats.aiCount %>
+        </span>
+        <div class="kpi-meta">
+          <span class="kpi-ic"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+          <span class="kpi-label">AI-Generated</span>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <span class="kpi-num">
+          <%= stats.manualCount %>
+        </span>
+        <div class="kpi-meta">
+          <span class="kpi-ic"><i class="fa-solid fa-pen-nib"></i></span>
+          <span class="kpi-label">Manual</span>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <span class="kpi-num">
+          <%= stats.totalViews %>
+        </span>
+        <div class="kpi-meta">
+          <span class="kpi-ic"><i class="fa-solid fa-eye"></i></span>
+          <span class="kpi-label">Total Views</span>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <span class="kpi-num">
+          <%= stats.bannedCount %>
+        </span>
+        <div class="kpi-meta">
+          <span class="kpi-ic"><i class="fa-solid fa-ban"></i></span>
+          <span class="kpi-label">Banned</span>
+        </div>
+      </div>
+    </div>
+
+
+<div class="chart-grid">
+  <div class="chart-panel">
+    <h3>Posts per day (last 14 days)</h3>
+    <div class="chart-box"><canvas id="postsChart"></canvas></div>
+  </div>
+  <div class="chart-panel">
+    <h3>Views per day (last 14 days)</h3>
+    <div class="chart-box"><canvas id="viewsChart"></canvas></div>
+  </div>
+</div>
+
+<h2 class="section-title">Recent Blogs</h2>
+<% if (!recentBlogs.length) { %>
+  <p class="muted">No blogs yet.</p>
+<% } else { %>
+  <div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th>Title</th><th>Author</th><th>Source</th><th>Date</th></tr></thead>
+    <tbody>
+      <% recentBlogs.forEach(function(b){ %>
+        <tr>
+          <td><a href="/blog/<%= b.slug %>"><%= b.title %></a></td>
+          <td><%= b.author ? b.author.name : '—' %></td>
+          <td><%= b.source === 'ai' ? 'AI' : 'Manual' %></td>
+          <td><%= new Date(b.createdAt).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% } %>
+
+<%- include('admin_end') %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+  (function () {
+    var data = <%- JSON.stringify(chart) %>;
+    var css = getComputedStyle(document.documentElement);
+    var accent = css.getPropertyValue('--accent').trim() || '#0f766e';
+    var grid = css.getPropertyValue('--border').trim() || '#e4e2da';
+    var textSoft = css.getPropertyValue('--text-soft').trim() || '#5a655f';
+    function hexA(hex, a) { return hex + a; }
+    var common = {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: textSoft, font: { size: 11 } } },
+        y: { beginAtZero: true, grid: { color: grid }, ticks: { color: textSoft, precision: 0 } }
+      }
+    };
+    if (window.Chart) {
+      new Chart(document.getElementById('postsChart'), {
+        type: 'bar',
+        data: { labels: data.labels, datasets: [{ data: data.posts, backgroundColor: accent, borderRadius: 6, maxBarThickness: 26 }] },
+        options: common
+      });
+      new Chart(document.getElementById('viewsChart'), {
+        type: 'line',
+        data: { labels: data.labels, datasets: [{ data: data.views, borderColor: accent, backgroundColor: 'rgba(15,118,110,0.12)', fill: true, tension: 0.35, pointRadius: 3 }] },
+        options: common
+      });
+    }
+  })();
+</script>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,59 @@
+<%- include('../partials/header') %>
+
+<% if (!currentUser) { %>
+  <section class="hero">
+    <div class="hero-badge"><i class="fa-solid fa-bolt"></i> Powered by Groq AI</div>
+    <h1 class="hero-title">Write smarter. <span class="grad">Publish faster.</span></h1>
+    <p class="hero-sub">A complete blog platform where you can generate SEO-ready articles with AI or write your own — and share them with the world.</p>
+    <div class="hero-actions">
+      <a href="/login" class="btn btn-lg"><i class="fa-solid fa-pen-to-square"></i> Contribute</a>
+      <a href="#latest" class="btn-ghost btn-lg btn"><i class="fa-solid fa-book-open"></i> Read Articles</a>
+    </div>
+  </section>
+<% } %>
+
+<div class="layout-grid" id="latest">
+  <div class="layout-main">
+    <section class="page-head"><h2 class="page-title">Latest Articles</h2></section>
+
+    <% if (!blogs.length) { %>
+      <div class="empty-state">
+        <div class="empty-icon"><i class="fa-regular fa-pen-to-square"></i></div>
+        <h3>No blogs published yet</h3>
+        <% if (currentUser) { %><a href="/blogs/generate" class="btn">Generate the first one <i class="fa-solid fa-arrow-right"></i></a><% } %>
+      </div>
+    <% } else { %>
+      <div class="blog-grid">
+        <% blogs.forEach(function(blog){ %>
+          <article class="blog-card">
+            <a href="/blog/<%= blog.slug %>" class="card-image <%= blog.coverImage ? '' : 'card-image--placeholder' %>"
+               <% if (blog.coverImage) { %>style="background-image:url('<%= blog.coverImage %>')"<% } %>><% if (!blog.coverImage) { %><i class="fa-regular fa-image"></i><% } %></a>
+            <div class="card-body">
+              <% if (blog.category) { %><span class="tag"><%= blog.category.name %></span><% } %>
+              <h3 class="card-title"><a href="/blog/<%= blog.slug %>"><%= blog.title %></a></h3>
+              <p class="card-excerpt"><%= blog.excerpt %></p>
+              <hr>
+              <p class="card-meta">
+                By <%= blog.author ? blog.author.name : 'Unknown' %> ·
+                <%= new Date(blog.createdAt).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) %>
+                <% if (blog.source === 'ai') { %> · <span class="ai-badge">AI</span><% } %>
+              </p>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+
+      <% if (totalPages > 1) { %>
+        <div class="pagination">
+          <% for (let i = 1; i <= totalPages; i++) { %>
+            <a href="/?page=<%= i %>" class="page-link <%= i === page ? 'active' : '' %>"><%= i %></a>
+          <% } %>
+        </div>
+      <% } %>
+    <% } %>
+  </div>
+
+  <%- include('../partials/sidebar') %>
+</div>
+
+<%- include('../partials/footer') %>

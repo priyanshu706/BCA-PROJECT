@@ -1,0 +1,55 @@
+<%- include('../partials/header') %>
+<%- include('admin_sidebar') %>
+
+<section class="page-head"><h1 class="page-title">Settings</h1></section>
+
+<div class="settings-grid">
+  <!-- API keys & model -->
+  <div class="panel">
+    <h2 class="section-title"><i class="fa-solid fa-key" style="color:var(--accent);margin-right:8px;"></i>API Keys &amp; AI Model</h2>
+    <p class="muted">Update these when a key expires. Values saved here override the .env defaults.</p>
+    <form action="/admin/settings" method="POST" class="form">
+      <label class="field"><span>Groq API Key</span>
+        <input type="text" name="groqApiKey" value="<%= settings.groqApiKey %>" placeholder="gsk_..." /></label>
+      <label class="field"><span>AI Model</span>
+        <input type="text" name="aiModel" value="<%= settings.aiModel %>" placeholder="llama-3.3-70b-versatile" /></label>
+      <label class="field"><span>Image Provider</span>
+        <select name="imageProvider">
+          <option value="pexels" <%= settings.imageProvider === 'pexels' ? 'selected' : '' %>>Pexels</option>
+          <option value="pixabay" <%= settings.imageProvider === 'pixabay' ? 'selected' : '' %>>Pixabay</option>
+        </select></label>
+      <label class="field"><span>Image API Key</span>
+        <input type="text" name="imageApiKey" value="<%= settings.imageApiKey %>" /></label>
+
+      <h3 class="section-title" style="margin-top:8px;"><i class="fa-solid fa-shield-halved" style="color:var(--accent);margin-right:8px;"></i>Cloudflare Turnstile (CAPTCHA)</h3>
+      <p class="muted">Bot protection on the login, register and password forms.</p>
+      <label class="field"><span>Turnstile Site Key</span>
+        <input type="text" name="turnstileSiteKey" value="<%= settings.turnstileSiteKey %>" placeholder="0x4AAAAAAA..." /></label>
+      <label class="field"><span>Turnstile Secret Key</span>
+        <input type="text" name="turnstileSecretKey" value="<%= settings.turnstileSecretKey %>" placeholder="0x4AAAAAAA..." /></label>
+
+      <button type="submit" class="btn"><i class="fa-solid fa-floppy-disk"></i> Save Settings</button>
+    </form>
+  </div>
+
+  <!-- Create new admin -->
+  <div class="panel">
+    <h2 class="section-title"><i class="fa-solid fa-user-shield" style="color:var(--accent);margin-right:8px;"></i>Create New Administrator</h2>
+    <p class="muted">Add another admin account. Admins have full control of the platform.</p>
+    <form action="/admin/admins" method="POST" class="form">
+      <label class="field"><span>Name</span><input type="text" name="name" required /></label>
+      <label class="field"><span>Email</span><input type="email" name="email" required /></label>
+      <label class="field"><span>Password</span>
+        <span class="pw-wrap"><input type="password" name="password" required minlength="6" /><button type="button" class="pw-toggle" aria-label="Show password" tabindex="-1"><i class="fa-regular fa-eye"></i></button></span></label>
+      <button type="submit" class="btn"><i class="fa-solid fa-plus"></i> Create Admin</button>
+    </form>
+
+    <h3 class="section-title" style="margin-top:22px;"><i class="fa-solid fa-users-gear" style="color:var(--accent);margin-right:8px;"></i>Current Administrators</h3>
+    <ul class="plain-list">
+      <% admins.forEach(function(a){ %><li><strong><%= a.name %></strong> — <%= a.email %></li><% }) %>
+    </ul>
+  </div>
+</div>
+
+<%- include('admin_end') %>
+<%- include('../partials/footer') %>

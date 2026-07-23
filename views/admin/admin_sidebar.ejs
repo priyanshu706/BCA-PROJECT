@@ -1,0 +1,17 @@
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="admin-side-head"><i class="fa-solid fa-shield-halved"></i> Admin Panel</div>
+    <nav class="admin-side-nav">
+      <% if (activeNav !== 'dashboard') { %><a href="/admin"><i class="fa-solid fa-gauge-high"></i> Dashboard</a><% } %>
+      <% if (activeNav !== 'users') { %><a href="/admin/users"><i class="fa-solid fa-users"></i> Users</a><% } %>
+      <% if (activeNav !== 'blogs') { %><a href="/admin/blogs"><i class="fa-solid fa-newspaper"></i> Blogs</a><% } %>
+      <% if (currentUser.isSuperAdmin && activeNav !== 'settings') { %><a href="/admin/settings"><i class="fa-solid fa-sliders"></i> Settings</a><% } %>
+    </nav>
+    <div class="admin-side-foot">
+      <a href="/" class="btn-sm btn-ghost btn-block btn"><i class="fa-solid fa-house"></i> View Site</a>
+      <form action="/logout?_method=POST" method="POST">
+        <button type="submit" class="btn btn-sm btn-block"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+      </form>
+    </div>
+  </aside>
+  <div class="admin-main">

@@ -1,0 +1,62 @@
+<%- include('../partials/header') %>
+  <%- include('admin_sidebar') %>
+
+    <section class="page-head">
+      <h1 class="page-title">Manage Blogs</h1>
+    </section>
+
+    <% if (!blogs.length) { %>
+      <p class="muted">No blogs yet.</p>
+      <% } else { %>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Source</th>
+                <th>Status</th>
+                <th>Views</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% blogs.forEach(function(b){ %>
+                <tr>
+                  <td><a href="/blog/<%= b.slug %>">
+                      <%= b.title %>
+                    </a></td>
+                  <td>
+                    <%= b.author ? b.author.name : '—' %>
+                  </td>
+                  <td>
+                    <%= b.source==='ai' ? 'AI' : 'Manual' %>
+                  </td>
+                  <td><span class="status status-<%= b.status %>">
+                      <%= b.status %>
+                    </span></td>
+                  <td>
+                    <%= b.views %>
+                  </td>
+                  <td class="row-actions">
+                    <form action="/admin/blogs/<%= b._id %>/status" method="POST" class="inline-form status-form">
+                      <select name="status" onchange="this.form.submit()" class="mini-select">
+                        <option value="published" <%=b.status==='published' ? 'selected' : '' %>>Published</option>
+                        <option value="draft" <%=b.status==='draft' ? 'selected' : '' %>>Draft</option>
+                        <option value="trash" <%=b.status==='trash' ? 'selected' : '' %>>Trash</option>
+                      </select>
+                    </form>
+                    <form action="/admin/blogs/<%= b._id %>?_method=DELETE" method="POST" class="inline-form"
+                      onsubmit="return confirm('Delete this blog permanently?');">
+                      <button type="submit" class="link-btn link-danger">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+                <% }) %>
+            </tbody>
+          </table>
+        </div>
+        <% } %>
+
+          <%- include('admin_end') %>
+            <%- include('../partials/footer') %>

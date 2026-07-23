@@ -1,0 +1,39 @@
+<%- include('../partials/header') %>
+
+<section class="generate-wrap">
+  <h1 class="page-title">Generate a Blog with AI</h1>
+  <p class="muted">Enter a topic and let the AI write a complete, SEO-ready article.</p>
+
+  <form action="/blogs/generate" method="POST" class="form" id="generateForm">
+    <label class="field"><span>Topic or Keywords <em>*</em></span>
+      <input type="text" name="topic" required minlength="3"
+             placeholder="e.g. Benefits of digital marketing for small businesses" /></label>
+
+    <div class="field-row">
+      <label class="field"><span>Tone</span>
+        <select name="tone">
+          <option value="informative and engaging">Informative &amp; Engaging</option>
+          <option value="professional">Professional</option>
+          <option value="casual and friendly">Casual &amp; Friendly</option>
+          <option value="persuasive">Persuasive</option>
+        </select></label>
+      <label class="field"><span>Length</span>
+        <select name="length">
+          <option value="short">Short (~450 words)</option>
+          <option value="medium" selected>Medium (~800 words)</option>
+          <option value="long">Long (~1500 words)</option>
+          <option value="xlong">Extra Long (2000+ words)</option>
+        </select></label>
+      <label class="field"><span>Category</span>
+        <select name="categoryId">
+          <option value="">— None —</option>
+          <% categories.forEach(function(c){ %><option value="<%= c._id %>"><%= c.name %></option><% }) %>
+        </select></label>
+    </div>
+
+    <button type="submit" class="btn btn-block" id="generateBtn"><span class="btn-label"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Blog</span></button>
+    <p class="hint">Long articles may take a little longer while the AI writes and an image is fetched.</p>
+  </form>
+</section>
+
+<%- include('../partials/footer') %>

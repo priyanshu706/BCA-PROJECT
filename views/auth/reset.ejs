@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+
+<section class="auth-wrap">
+  <div class="auth-card">
+    <form action="/reset-password/<%= token %>" method="POST" class="form" style="display:flex;flex-direction:column;gap:16px;">
+      <h1 class="auth-title">Set a new password</h1>
+      <p class="auth-sub">Choose a strong new password for your account.</p>
+      <label class="field"><span>New Password</span>
+        <span class="pw-wrap"><input type="password" name="password" required minlength="6" placeholder="At least 6 characters" /><button type="button" class="pw-toggle" aria-label="Show password" tabindex="-1"><i class="fa-regular fa-eye"></i></button></span></label>
+      <label class="field"><span>Confirm Password</span>
+        <span class="pw-wrap"><input type="password" name="confirmPassword" required minlength="6" placeholder="Re-enter password" /><button type="button" class="pw-toggle" aria-label="Show password" tabindex="-1"><i class="fa-regular fa-eye"></i></button></span></label>
+      <% if (turnstileSiteKey) { %><div class="cf-turnstile" data-sitekey="<%= turnstileSiteKey %>"></div><% } %>
+      <button type="submit" class="btn btn-block"><i class="fa-solid fa-key"></i> Update Password</button>
+      <p class="auth-alt"><a href="/login">Back to login</a></p>
+    </form>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
